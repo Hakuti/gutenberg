@@ -346,6 +346,10 @@ Undocumented declaration.
 
 Undocumented declaration.
 
+<a name="createDerivedAtom" href="#createDerivedAtom">#</a> **createDerivedAtom**
+
+Undocumented declaration.
+
 <a name="createRegistry" href="#createRegistry">#</a> **createRegistry**
 
 Creates a new store registry, given an optional object of initial store
@@ -434,6 +438,10 @@ _Parameters_
 _Returns_
 
 -   `Function`: Registry selector that can be registered with a store.
+
+<a name="createStoreAtom" href="#createStoreAtom">#</a> **createStoreAtom**
+
+Undocumented declaration.
 
 <a name="dispatch" href="#dispatch">#</a> **dispatch**
 
