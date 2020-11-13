@@ -78,7 +78,7 @@ export const IFrame = ( { children, head, styles, ...props } ) => {
 					init[ key ] = event[ key ];
 				}
 
-				if ( event instanceof event.view.MouseEvent ) {
+				if ( event.view && event instanceof event.view.MouseEvent ) {
 					const rect = contentRef.getBoundingClientRect();
 					init.clientX += rect.left;
 					init.clientY += rect.top;
