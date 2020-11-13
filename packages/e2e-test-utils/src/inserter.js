@@ -170,7 +170,7 @@ export async function insertReusableBlock( searchTerm ) {
 	// We should wait until the inserter closes and the focus moves to the content.
 	await waitForInserterCloseAndContentFocus();
 	// We should wait until the block is loaded
-	await page.waitForXPath(
+	await canvas().waitForXPath(
 		'//*[@class="block-library-block__reusable-block-container"]'
 	);
 }

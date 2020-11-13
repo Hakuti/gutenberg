@@ -50,7 +50,7 @@ describe( 'Reusable blocks', () => {
 		await page.waitForXPath(
 			'//*[contains(@class, "components-snackbar")]/*[text()="Block created."]'
 		);
-		await page.waitForXPath(
+		await canvas().waitForXPath(
 			'//*[@class="block-library-block__reusable-block-container"]'
 		);
 
@@ -74,11 +74,7 @@ describe( 'Reusable blocks', () => {
 		expect( block ).not.toBeNull();
 
 		// Check that its title is displayed
-		const title = await canvas().$eval(
-			'.reusable-block-edit-panel__info',
-			( element ) => element.innerText
-		);
-		expect( title ).toBe( 'Greeting block' );
+		await canvas().waitForXPath( '//b[text()="Greeting block"]' );
 	} );
 
 	it( 'can be created with no title', async () => {
@@ -93,7 +89,7 @@ describe( 'Reusable blocks', () => {
 		await page.waitForXPath(
 			'//*[contains(@class, "components-snackbar")]/*[text()="Block created."]'
 		);
-		await page.waitForXPath(
+		await canvas().waitForXPath(
 			'//*[@class="block-library-block__reusable-block-container"]'
 		);
 
@@ -111,11 +107,7 @@ describe( 'Reusable blocks', () => {
 		expect( block ).not.toBeNull();
 
 		// Check that it is untitled
-		const title = await canvas().$eval(
-			'.reusable-block-edit-panel__info',
-			( element ) => element.innerText
-		);
-		expect( title ).toBe( 'Untitled Reusable Block' );
+		await canvas().waitForXPath( '//b[text()="Untitled Reusable Block"]' );
 	} );
 
 	it( 'can be inserted and edited', async () => {
@@ -126,6 +118,7 @@ describe( 'Reusable blocks', () => {
 		const editButton = await canvas().waitForXPath(
 			'//button[text()="Edit" and not(@disabled)]'
 		);
+
 		await editButton.click();
 
 		// Change the block's title
@@ -156,11 +149,7 @@ describe( 'Reusable blocks', () => {
 		expect( block ).not.toBeNull();
 
 		// Check that its title is displayed
-		const title = await canvas().$eval(
-			'.reusable-block-edit-panel__info',
-			( element ) => element.innerText
-		);
-		expect( title ).toBe( 'Surprised greeting block' );
+		await canvas().waitForXPath( '//b[text()="Surprised greeting block"]' );
 
 		// Check that its content is up to date
 		const text = await canvas().$eval(
@@ -183,7 +172,7 @@ describe( 'Reusable blocks', () => {
 		await page.waitForXPath(
 			'//*[contains(@class, "components-snackbar")]/*[text()="Block created."]'
 		);
-		await page.waitForXPath(
+		await canvas().waitForXPath(
 			'//*[@class="block-library-block__reusable-block-container"]'
 		);
 
@@ -212,11 +201,7 @@ describe( 'Reusable blocks', () => {
 		expect( block ).not.toBeNull();
 
 		// Check that its title is displayed
-		const title = await canvas().$eval(
-			'.reusable-block-edit-panel__info',
-			( element ) => element.innerText
-		);
-		expect( title ).toBe( 'Awesome block' );
+		await canvas().waitForXPath( '//b[text()="Awesome block"]' );
 	} );
 
 	it( 'can be converted to a regular block', async () => {
@@ -290,7 +275,7 @@ describe( 'Reusable blocks', () => {
 		await page.waitForXPath(
 			'//*[contains(@class, "components-snackbar")]/*[text()="Block created."]'
 		);
-		await page.waitForXPath(
+		await canvas().waitForXPath(
 			'//*[@class="block-library-block__reusable-block-container"]'
 		);
 
@@ -314,11 +299,9 @@ describe( 'Reusable blocks', () => {
 		expect( block ).not.toBeNull();
 
 		// Check that its title is displayed
-		const title = await canvas().$eval(
-			'.reusable-block-edit-panel__info',
-			( element ) => element.innerText
+		await canvas().waitForXPath(
+			'//b[text()="Multi-selection reusable block"]'
 		);
-		expect( title ).toBe( 'Multi-selection reusable block' );
 	} );
 
 	it( 'multi-selection reusable block can be converted back to regular blocks', async () => {
