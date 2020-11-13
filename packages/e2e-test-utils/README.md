@@ -322,6 +322,7 @@ result that appears. It then waits briefly for the block list to update.
 _Parameters_
 
 -   _searchTerm_ `string`: The text to search the inserter for.
+-   _withoutIframeSupport_ `boolean`: 
 
 <a name="insertBlockDirectoryBlock" href="#insertBlockDirectoryBlock">#</a> **insertBlockDirectoryBlock**
 

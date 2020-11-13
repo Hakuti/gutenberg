@@ -41,6 +41,7 @@ export default function ClassicEdit( {
 	setAttributes,
 	onReplace,
 } ) {
+	const ref = useRef();
 	const didMount = useRef( false );
 
 	useEffect( () => {
@@ -151,7 +152,7 @@ export default function ClassicEdit( {
 				const rootNode = editor.getBody();
 
 				// Create the toolbar by refocussing the editor.
-				if ( rootNode.ownerDocument.activeElement === rootNode ) {
+				if ( ref.current.ownerDocument.activeElement === ref.current ) {
 					rootNode.blur();
 					editor.focus();
 				}
@@ -220,7 +221,7 @@ export default function ClassicEdit( {
 					<ConvertToBlocksButton clientId={ clientId } />
 				</ToolbarGroup>
 			</BlockControls>
-			<div { ...useBlockProps() }>
+			<div { ...useBlockProps( { ref } ) }>
 				<div
 					key="toolbar"
 					id={ `toolbar-${ clientId }` }

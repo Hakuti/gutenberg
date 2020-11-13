@@ -54,12 +54,13 @@ async function toggleGlobalBlockInserter() {
 
 /**
  * Retrieves the document container by css class and checks to make sure the document's active element is within it
+ *
+ * @param {boolean} withoutIframeSupport
  */
-async function waitForInserterCloseAndContentFocus() {
-	await canvas().waitForFunction( () =>
-		document
-			.querySelector( '.block-editor-block-list__layout' )
-			.contains( document.activeElement )
+async function waitForInserterCloseAndContentFocus( withoutIframeSupport ) {
+	const frame = withoutIframeSupport ? page : canvas();
+	await frame.waitForFunction( () =>
+		document.activeElement.closest( '.wp-block' )
 	);
 }
 
@@ -125,15 +126,16 @@ export async function searchForReusableBlock( searchTerm ) {
  * result that appears. It then waits briefly for the block list to update.
  *
  * @param {string} searchTerm The text to search the inserter for.
+ * @param {boolean} withoutIframeSupport
  */
-export async function insertBlock( searchTerm ) {
+export async function insertBlock( searchTerm, withoutIframeSupport ) {
 	await searchForBlock( searchTerm );
 	const insertButton = (
 		await page.$x( `//button//span[contains(text(), '${ searchTerm }')]` )
 	 )[ 0 ];
 	await insertButton.click();
 	// We should wait until the inserter closes and the focus moves to the content.
-	await waitForInserterCloseAndContentFocus();
+	await waitForInserterCloseAndContentFocus( withoutIframeSupport );
 }
 
 /**

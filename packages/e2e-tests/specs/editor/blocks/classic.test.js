@@ -25,7 +25,7 @@ describe( 'Classic', () => {
 	} );
 
 	it( 'should be inserted', async () => {
-		await insertBlock( 'Classic' );
+		await insertBlock( 'Classic', true );
 		// Wait for TinyMCE to initialise.
 		await page.waitForSelector( '.mce-content-body' );
 		// Ensure there is focus.
@@ -38,7 +38,7 @@ describe( 'Classic', () => {
 	} );
 
 	it( 'should insert media, convert to blocks, and undo in one step', async () => {
-		await insertBlock( 'Classic' );
+		await insertBlock( 'Classic', true );
 		// Wait for TinyMCE to initialise.
 		await page.waitForSelector( '.mce-content-body' );
 		// Ensure there is focus.
@@ -113,7 +113,7 @@ describe( 'Classic', () => {
 			}
 		};
 
-		await insertBlock( 'Classic' );
+		await insertBlock( 'Classic', true );
 
 		// Wait for TinyMCE to initialise.
 		await page.waitForSelector( '.mce-content-body' );
