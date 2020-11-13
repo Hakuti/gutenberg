@@ -69,10 +69,12 @@ describe( 'Image', () => {
 		expect( await getEditedPostContent() ).toMatch( regex1 );
 
 		await openDocumentSettingsSidebar();
-		await page.click( '[aria-label="Image size presets"] button' );
+		await page.click( '.block-editor-image-size-control__height' );
+		await page.keyboard.press( 'Delete' );
+		await page.keyboard.type( '5' );
 
 		const regex2 = new RegExp(
-			`<!-- wp:image {"id":\\d+,"width":3,"height":3,"sizeSlug":"large","linkDestination":"none"} -->\\s*<figure class="wp-block-image size-large is-resized"><img src="[^"]+\\/${ filename1 }\\.png" alt="" class="wp-image-\\d+" width="3" height="3"\\/><\\/figure>\\s*<!-- /wp:image -->`
+			`<!-- wp:image {"id":\\d+,"height":50,"sizeSlug":"large","linkDestination":"none"} -->\\s*<figure class="wp-block-image size-large is-resized"><img src="[^"]+\\/${ filename1 }\\.png" alt="" class="wp-image-\\d+" height="50"\\/><\\/figure>\\s*<!-- /wp:image -->`
 		);
 
 		expect( await getEditedPostContent() ).toMatch( regex2 );
