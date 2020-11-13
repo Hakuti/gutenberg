@@ -271,7 +271,7 @@ describe( 'Table', () => {
 		await insertBlock( 'Table' );
 
 		// Create the table.
-		await clickButton( createButtonLabel );
+		await clickButton( createButtonLabel, canvas() );
 
 		await page.keyboard.press( 'Tab' );
 		await page.keyboard.type( '1' );

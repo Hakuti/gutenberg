@@ -8,5 +8,6 @@ export async function clickButton( buttonText, frame = page ) {
 	const button = await frame.waitForXPath(
 		`//button[contains(text(), '${ buttonText }')]`
 	);
+	await button.evaluate( ( element ) => element.scrollIntoView() );
 	await button.click();
 }

@@ -117,10 +117,10 @@ describe( 'Multi-entity save flow', () => {
 				createNewButtonSelector
 			);
 			await createNewButton.click();
-			await page.waitForSelector( activatedTemplatePartSelector );
+			await canvas().waitForSelector( activatedTemplatePartSelector );
 			await page.keyboard.press( 'Tab' );
 			await page.keyboard.type( 'test-template-part' );
-			await page.click( '.block-editor-button-block-appender' );
+			await canvas().click( '.block-editor-button-block-appender' );
 			await page.click( '.editor-block-list-item-paragraph' );
 			await page.keyboard.type( 'some words...' );
 
@@ -179,7 +179,7 @@ describe( 'Multi-entity save flow', () => {
 			await assertExistance( saveA11ySelector, false );
 
 			// Update template part.
-			await page.click( templatePartSelector );
+			await canvas().click( templatePartSelector );
 			await page.keyboard.type( '...some more words...' );
 			await page.keyboard.press( 'Enter' );
 
