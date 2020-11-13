@@ -15,6 +15,7 @@ import {
 	MultiSelectScrollIntoView,
 	__experimentalBlockSettingsMenuFirstItem,
 	__experimentalUseResizeCanvas as useResizeCanvas,
+	__unstableEditorStyles as EditorStyles,
 } from '@wordpress/block-editor';
 import { Popover, DropZoneProvider } from '@wordpress/components';
 import { useState, useEffect, createPortal } from '@wordpress/element';
@@ -26,7 +27,7 @@ import { __ } from '@wordpress/i18n';
 import BlockInspectorButton from './block-inspector-button';
 import { useSelect } from '@wordpress/data';
 
-export const IFrame = ( { children, head, styles, ...props } ) => {
+export const IFrame = ( { children, head, ...props } ) => {
 	const [ contentRef, setContentRef ] = useState();
 	const doc = contentRef && contentRef.contentDocument;
 
@@ -36,12 +37,6 @@ export const IFrame = ( { children, head, styles, ...props } ) => {
 			doc.body.style.margin = '0px';
 			doc.head.innerHTML = head;
 			doc.dir = document.dir;
-
-			styles.forEach( ( { css } ) => {
-				const styleEl = doc.createElement( 'style' );
-				styleEl.innerHTML = css;
-				doc.head.appendChild( styleEl );
-			} );
 
 			[ ...document.styleSheets ].reduce( ( acc, styleSheet ) => {
 				try {
@@ -59,7 +54,7 @@ export const IFrame = ( { children, head, styles, ...props } ) => {
 						const node = styleSheet.ownerNode;
 
 						if ( ! doc.getElementById( node.id ) ) {
-							doc.head.appendChild( node );
+							doc.head.appendChild( node.cloneNode( true ) );
 						}
 					}
 				} catch ( e ) {}
@@ -133,10 +128,10 @@ function VisualEditor( { settings } ) {
 				className="edit-post-visual-editor"
 				style={ inlineStyles }
 				head={ window.__editorStyles.html }
-				styles={ settings.styles }
 			>
 				<BlockSelectionClearer>
 					<DropZoneProvider>
+						<EditorStyles styles={ settings.styles } />
 						<MultiSelectScrollIntoView />
 						<Typewriter>
 							<CopyHandler>
