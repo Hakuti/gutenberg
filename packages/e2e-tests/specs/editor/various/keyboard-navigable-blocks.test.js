@@ -182,7 +182,7 @@ describe( 'Order of block keyboard navigation', () => {
 		).toBe( 'Add title' );
 
 		await pressKeyWithModifier( 'shift', 'Tab' );
-		await expect( await getActiveLabel() ).toBe( 'More tools & options' );
+		await expect( await getActiveLabel() ).toBe( 'Options' );
 	} );
 
 	it( 'should navigate correctly with multi selection', async () => {
