@@ -62,35 +62,26 @@ describe( 'Draggable block', () => {
 		// Confirm dragged state.
 		await page.waitForSelector( '.components-draggable__clone' );
 
-		const paragraph = await canvas().$( '[data-type="core/paragraph"]' );
-
-		const paragraphRect = await paragraph.boundingBox();
-		const pX = paragraphRect.x + paragraphRect.width / 2;
-		const pY = paragraphRect.y + paragraphRect.height / 3;
-
-		// Move over upper side of the first paragraph.
-		await page.mouse.move( pX, pY, { steps: 10 } );
-
 		// Puppeteer fires the initial `dragstart` event, but no further events.
 		// Simulating the drop event works.
-		await paragraph.evaluate(
-			( element, clientX, clientY ) => {
-				const dataTransfer = new DataTransfer();
-				dataTransfer.setData(
-					'text/plain',
-					JSON.stringify( window.parent._dataTransfer )
-				);
-				const event = new DragEvent( 'drop', {
-					bubbles: true,
-					clientX,
-					clientY,
-					dataTransfer,
-				} );
-				element.dispatchEvent( event );
-			},
-			pX,
-			pY
-		);
+		await canvas().evaluate( () => {
+			const paragraph = document.querySelector(
+				'[data-type="core/paragraph"]'
+			);
+			const paragraphRect = paragraph.getBoundingClientRect();
+			const dataTransfer = new DataTransfer();
+			dataTransfer.setData(
+				'text/plain',
+				JSON.stringify( window.parent._dataTransfer )
+			);
+			const event = new DragEvent( 'drop', {
+				bubbles: true,
+				clientX: paragraphRect.x + paragraphRect.width / 2,
+				clientY: paragraphRect.y + paragraphRect.height / 3,
+				dataTransfer,
+			} );
+			paragraph.dispatchEvent( event );
+		} );
 
 		await page.mouse.up();
 
