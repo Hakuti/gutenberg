@@ -12,7 +12,6 @@ import { v4 as uuid } from 'uuid';
 import {
 	getEditedPostContent,
 	createNewPost,
-	insertBlock,
 	pressKeyWithModifier,
 	clickBlockToolbarButton,
 	saveDraft,
@@ -25,7 +24,9 @@ describe( 'Classic', () => {
 	} );
 
 	it( 'should be inserted', async () => {
-		await insertBlock( 'Classic' );
+		await page.keyboard.press( 'Enter' );
+		await page.keyboard.type( '/classic' );
+		await page.keyboard.press( 'Enter' );
 		// Wait for TinyMCE to initialise.
 		await page.waitForSelector( '.mce-content-body' );
 		// Ensure there is focus.
@@ -38,7 +39,9 @@ describe( 'Classic', () => {
 	} );
 
 	it( 'should insert media, convert to blocks, and undo in one step', async () => {
-		await insertBlock( 'Classic' );
+		await page.keyboard.press( 'Enter' );
+		await page.keyboard.type( '/classic' );
+		await page.keyboard.press( 'Enter' );
 		// Wait for TinyMCE to initialise.
 		await page.waitForSelector( '.mce-content-body' );
 		// Ensure there is focus.
@@ -113,7 +116,9 @@ describe( 'Classic', () => {
 			}
 		};
 
-		await insertBlock( 'Classic' );
+		await page.keyboard.press( 'Enter' );
+		await page.keyboard.type( '/classic' );
+		await page.keyboard.press( 'Enter' );
 
 		// Wait for TinyMCE to initialise.
 		await page.waitForSelector( '.mce-content-body' );
