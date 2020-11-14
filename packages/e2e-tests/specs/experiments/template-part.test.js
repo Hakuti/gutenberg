@@ -266,7 +266,7 @@ describe( 'Template Part', () => {
 				chooseExistingButtonSelector
 			);
 			await chooseExistingButton.click();
-			const preview = await canvas().waitForXPath( testContentSelector );
+			const preview = await page.waitForXPath( testContentSelector );
 			expect( preview ).toBeTruthy();
 
 			await preview.click();

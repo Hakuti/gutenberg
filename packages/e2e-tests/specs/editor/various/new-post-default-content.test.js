@@ -9,6 +9,7 @@ import {
 	getEditedPostContent,
 	openDocumentSettingsSidebar,
 	canvas,
+	clickButton,
 } from '@wordpress/e2e-test-utils';
 
 describe( 'new editor filtered state', () => {
@@ -34,6 +35,7 @@ describe( 'new editor filtered state', () => {
 
 		// open the sidebar, we want to see the excerpt.
 		await openDocumentSettingsSidebar();
+		await clickButton( 'Post' );
 		const excerptButton = await findSidebarPanelToggleButtonWithTitle(
 			'Excerpt'
 		);
