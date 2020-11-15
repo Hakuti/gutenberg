@@ -102,6 +102,7 @@ export { default as SkipToSelectedBlock } from './skip-to-selected-block';
 export { default as Typewriter } from './typewriter';
 export { default as Warning } from './warning';
 export { default as WritingFlow } from './writing-flow';
+export { default as Iframe } from './iframe';
 
 /*
  * State Related Components
