@@ -34,7 +34,7 @@ function VisualEditor( { settings } ) {
 	const inlineStyles = useResizeCanvas( deviceType );
 
 	return (
-		<>
+		<div style={ { position: 'relative', height: '100%' } }>
 			<VisualEditorGlobalKeyboardShortcuts />
 			<Popover.Slot name="block-toolbar" />
 			<Iframe
@@ -68,7 +68,7 @@ function VisualEditor( { settings } ) {
 					</DropZoneProvider>
 				</BlockSelectionClearer>
 			</Iframe>
-		</>
+		</div>
 	);
 }
 

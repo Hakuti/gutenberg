@@ -3,6 +3,7 @@
  */
 import { useState, useEffect, createPortal, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useResizeObserver } from '@wordpress/compose';
 
 function IframeContent( { doc, head, children } ) {
 	useEffect( () => {
@@ -10,8 +11,10 @@ function IframeContent( { doc, head, children } ) {
 		const { frameElement } = defaultView;
 
 		doc.body.className = 'editor-styles-wrapper';
-		doc.body.style.margin = '0px';
-		doc.head.innerHTML = head;
+		// Necessary for the resize listener to work correctly.
+		doc.body.style.position = 'relative';
+		// Body style must be overridable by themes.
+		doc.head.innerHTML = '<style>body{margin:0}</style>' + head;
 		doc.dir = document.dir;
 
 		[ ...document.styleSheets ].reduce( ( acc, styleSheet ) => {
@@ -73,12 +76,13 @@ function IframeContent( { doc, head, children } ) {
 				doc.removeEventListener( name, bubbleEvent );
 			} );
 		};
-	}, [ doc ] );
+	}, [] );
 
 	return createPortal( children, doc.body );
 }
 
-export default function Iframe( { children, head, ...props } ) {
+export default function Iframe( { children, head, style = {}, ...props } ) {
+	const [ resizeListener, sizes ] = useResizeObserver();
 	const [ contentDocument, setContentDocument ] = useState();
 	const ref = useRef();
 
@@ -105,7 +109,15 @@ export default function Iframe( { children, head, ...props } ) {
 	return (
 		<iframe
 			{ ...props }
+			style={ {
+				display: 'block',
+				width: '100%',
+				height: sizes.height + 'px',
+				minHeight: '100%',
+				...style,
+			} }
 			ref={ setRef }
+			tabIndex="0"
 			title={ __( 'Editor canvas' ) }
 			name="editor-canvas"
 			onLoad={ () => {
@@ -116,6 +128,7 @@ export default function Iframe( { children, head, ...props } ) {
 			{ contentDocument && (
 				<IframeContent doc={ contentDocument } head={ head }>
 					{ children }
+					{ resizeListener }
 				</IframeContent>
 			) }
 		</iframe>
