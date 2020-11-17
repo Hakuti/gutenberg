@@ -69,6 +69,7 @@ function gutenberg_register_template_post_type() {
 		'supports'          => array(
 			'title',
 			'slug',
+			'excerpt',
 			'editor',
 			'revisions',
 		),
@@ -258,3 +259,15 @@ function filter_rest_wp_template_query( $args, $request ) {
 }
 add_filter( 'rest_wp_template_query', 'filter_rest_wp_template_query', 99, 2 );
 
+/**
+ * Filter the default template types to temporarily remove 'embed',
+ * because it is not a regular template type.
+ *
+ * @param array $default_template_types The array of template types definitions.
+ * @return array Filtered $default_template_types.
+ */
+function gutenberg_filter_default_template_types( $default_template_types ) {
+	unset( $default_template_types['embed'] );
+	return $default_template_types;
+}
+add_filter( 'default_template_types', 'gutenberg_filter_default_template_types' );
